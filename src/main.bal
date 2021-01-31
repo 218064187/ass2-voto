@@ -2,14 +2,15 @@ import ballerina/io;
 import ballerina/http;
 import ballerina/lang.'int;
 
-http:Client clientEndpoint = check new ("http://localhost:9090");
+
+http:Client clientEndpoint = check new ("http://localhost:9090"); // create a client object
 
 public function main () {
       dashboard();
 }
 
 
-public function print_choices(){
+public function options(){
     io:println("~~~~~~~~~~WELCOME TO VOTO~~~~~~~~");
     io:println();
     io:println("1.Register as candidate");
@@ -21,15 +22,19 @@ public function print_choices(){
 }
 
 
-public function regist_candidate(){
-    string name = io:readln("Enter Name :");
-    string nam_id  = io:readln("Enter Namibian ID  :");
-    string ruling_party  = io:readln("Enter Ruling  Party  :");
+//--------------------------------------------------------------------------------------------
+
+
+public function registCandidate(){
+    string name = io:readln("Enter Name : ");
+    string nam_id  = io:readln("Enter Namibian ID  : ");
+    string ruling_party  = io:readln("Enter Ruling  Party  : ");
 
     int|error id = 'int:fromString(nam_id);
 
      var  response = clientEndpoint->post("/graphql",{ query: " { candidate_register(name:\"tinashe\",id:1,party:\"swapo\") }" });
-    // io:println(response);
+    
+    
     if (response is  http:Response) {
         var jsonResponse = response.getJsonPayload();
 
@@ -42,6 +47,10 @@ public function regist_candidate(){
 
      }
 }
+
+
+
+//--------------------------------------------------------------------------------------------
 
 
 public function regist_voter(){
@@ -65,6 +74,8 @@ public function regist_voter(){
     }
 }
 
+//--------------------------------------------------------------------------------------------
+
 public function vote(){
     string name = io:readln("Enter voter ID :");
     string nam_id  = io:readln("Enter  candidate id  :");
@@ -87,18 +98,20 @@ public function vote(){
 
 }
 
+//--------------------------------------------------------------------------------------------
+
 public function dashboard(){
-    print_choices();
+    options();
 
-    string choice = io:readln("Enter choice>> ");
+    string option = io:readln("Enter option : ");
 
-    if (choice === "1"){
-        regist_candidate();
+    if (option === "1"){
+        registCandidate();
 
-    }else if(choice === "2"){
+    }else if(option === "2"){
         regist_voter();
 
-    }else if(choice === "3"){
+    }else if(option === "3"){
         vote();
     }
 
