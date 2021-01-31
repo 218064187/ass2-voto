@@ -1,5 +1,12 @@
 import ballerinax/kafka;
 import ballerina/log;
+import ballerina/docker;
+
+@docker:Config {
+  name:"register_voter",
+  tag:"v2.0"
+}
+
 
 kafka:ConsumerConfiguration consConf = {
     bootstrapServers: "localhost:9092",
