@@ -65,7 +65,6 @@ public function regist_voter(){
     }
 }
 
-
 public function vote(){
     string name = io:readln("Enter voter ID :");
     string nam_id  = io:readln("Enter  candidate id  :");
