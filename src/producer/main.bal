@@ -8,6 +8,7 @@ import ballerina/docker;
   name:"register_candi",
   tag:"v1.0"
 }
+
 @kubernetes:Deployment { image:"consumer-service", name:"kafka-consumer" }
 kafka:ProducerConfiguration Candidate_Register = {
 	bootstrapServers: "localhost:9092",
@@ -17,6 +18,7 @@ kafka:ProducerConfiguration Candidate_Register = {
 //	valueSerializerType: kafka:SER_STRING,
 //	keySerializerType: kafka:SER_INT
 };
+
 kafka:ProducerConfiguration vote = {
 	bootstrapServers: "localhost:9092",
 	clientId: "vote",
@@ -25,6 +27,7 @@ kafka:ProducerConfiguration vote = {
 //	valueSerializerType: kafka:SER_STRING,
 //	keySerializerType: kafka:SER_INT
 };
+
 kafka:ProducerConfiguration register_voter = {
 	bootstrapServers: "localhost:9092",
 	clientId: "register-voter",
@@ -58,6 +61,7 @@ service graphql:Service /graphql on new graphql:Listener(9090) {
         return "Candidate registered succesfully : " + name;
     }
     //vote 
+    
      resource function get vote(int voterID,int candidateID) returns string {
             Vote vote_info ={voterID,candidateID};
         //    //check if the details are correct
