@@ -4,6 +4,7 @@ import ballerina/graphql;
 import ballerina/io;
 import ballerina/docker;
  
+ 
 @docker:Config {
   name:"register_candi",
   tag:"v1.0"
@@ -37,9 +38,7 @@ kafka:ProducerConfiguration register_voter = {
 //	keySerializerType: kafka:SER_INT
 };
 
-map<json> registered_candidate_voters ={};
-map<json> register_vote ={};
-map<json> accepted_vote ={};
+
 
 
 kafka:Producer prod =checkpanic new (Candidate_Register);
@@ -112,3 +111,8 @@ public type Registered_voter record {
     string name;
     int namibian_id;
 };
+
+
+map<json> registered_candidate_voters ={};
+map<json> register_vote ={};
+map<json> accepted_vote ={};
