@@ -16,8 +16,6 @@ kafka:ProducerConfiguration Candidate_Register = {
 	clientId: "register-candidate",
 	acks: "all",
 	retryCount: 3
-//	valueSerializerType: kafka:SER_STRING,
-//	keySerializerType: kafka:SER_INT
 };
 
 kafka:ProducerConfiguration vote = {
@@ -25,8 +23,6 @@ kafka:ProducerConfiguration vote = {
 	clientId: "vote",
 	acks: "all",
 	retryCount: 3
-//	valueSerializerType: kafka:SER_STRING,
-//	keySerializerType: kafka:SER_INT
 };
 
 kafka:ProducerConfiguration register_voter = {
@@ -34,8 +30,6 @@ kafka:ProducerConfiguration register_voter = {
 	clientId: "register-voter",
 	acks: "all",
 	retryCount: 3
-//	valueSerializerType: kafka:SER_STRING,
-//	keySerializerType: kafka:SER_INT
 };
 
 
@@ -63,7 +57,7 @@ service graphql:Service /graphql on new graphql:Listener(9090) {
     
      resource function get vote(int voterID,int candidateID) returns string {
             Vote vote_info ={voterID,candidateID};
-        //    //check if the details are correct
+            //check if the details are correct
             // if (register_vote.hasKey(voterID) && registered_candidate_voters.hasKey(candidateID) ){
             //       io:println("very");
             // }
