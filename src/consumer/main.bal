@@ -37,13 +37,3 @@ service kafka:Service on cons {
     }
 }
 
-function processKafkaRecord(kafka:ConsumerRecord kafkaRecord) {
-    byte[] value = kafkaRecord.value;
-    string|error messageContent = string:fromBytes(value);
-    
-    if (messageContent is string) {
-        log:print("Value: " + messageContent);
-    } else {
-        log:printError("Invalid value type received");
-    }
-}
