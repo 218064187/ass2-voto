@@ -6,21 +6,39 @@ import ballerina/lang.'int;
 http:Client clientEndpoint = check new ("http://localhost:9090"); // create a client object
 
 public function main () {
-      dashboard();
+      select();
 }
 
 
 public function options(){
-    io:println("~~~~~~~~~~WELCOME TO VOTO~~~~~~~~");
+    io:println("------------------------------ WELCOME TO VOTO ------------------------------");
     io:println();
     io:println("1.Register as candidate");
     io:println("2.Register as voter");
     io:println("3.Vote");
     io:println("4.Projections");
     io:println("5.Get results");
-    io:println( "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    io:println( "-----------------------------------------------------------------------------");
 }
 
+//--------------------------------------------------------------------------------------------
+
+public function select(){
+    options();
+
+    string option = io:readln("Enter option : ");
+
+    if (option === "1"){
+        registCandidate();
+
+    }else if(option === "2"){
+        regist_voter();
+
+    }else if(option === "3"){
+        vote();
+    }
+
+}
 
 //--------------------------------------------------------------------------------------------
 
@@ -94,25 +112,6 @@ public function vote(){
             io:println("Invalid payload received:", jsonResponse.message());
         }
 
-    }
-
-}
-
-//--------------------------------------------------------------------------------------------
-
-public function dashboard(){
-    options();
-
-    string option = io:readln("Enter option : ");
-
-    if (option === "1"){
-        registCandidate();
-
-    }else if(option === "2"){
-        regist_voter();
-
-    }else if(option === "3"){
-        vote();
     }
 
 }
