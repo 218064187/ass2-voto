@@ -10,6 +10,12 @@ import ballerina/docker;
   tag:"v1.0"
 }
 
+kafka:Producer prod =checkpanic new (Candidate_Register);
+kafka:Producer vote_producer =checkpanic new (vote);
+kafka:Producer vote_register_prod =checkpanic new (register_voter);
+
+
+
 @kubernetes:Deployment { image:"consumer-service", name:"kafka-consumer" }
 kafka:ProducerConfiguration Candidate_Register = {
 	bootstrapServers: "localhost:9092",
@@ -35,9 +41,6 @@ kafka:ProducerConfiguration register_voter = {
 
 
 
-kafka:Producer prod =checkpanic new (Candidate_Register);
-kafka:Producer vote_producer =checkpanic new (vote);
-kafka:Producer vote_register_prod =checkpanic new (register_voter);
 
 service graphql:Service /graphql on new graphql:Listener(9090) {
  //register candidate
@@ -53,7 +56,7 @@ service graphql:Service /graphql on new graphql:Listener(9090) {
             io:println(registered_candidate_voters);
         return "Candidate registered succesfully : " + name;
     }
-    //vote 
+    
     
      resource function get vote(int voterID,int candidateID) returns string {
             Vote vote_info ={voterID,candidateID};
@@ -71,8 +74,8 @@ service graphql:Service /graphql on new graphql:Listener(9090) {
         return "Hello, " ;
     }
 
-// register as a voter
-     resource function get register_vote(string name,int namibian_id) returns string {
+
+     resource function get register_vote(string name,int namibian_id) returns string { // register as a voter
             Registered_voter vote_info ={name,namibian_id};
             // Candidate candidate ={name,id,ruling_party};
             register_vote[namibian_id.toString()] = {name:name,namibian_id:namibian_id};
@@ -90,23 +93,29 @@ service graphql:Service /graphql on new graphql:Listener(9090) {
     //count votes 
 
 }
+
+
 //records
 public type Candidate record {
     string name;
     int id;
     string ruling_party;
 };
+
+
 public type Vote record {
     int voterID;
     int candidateID;
     
 };
+
+
 public type Registered_voter record {
     string name;
     int namibian_id;
 };
 
-
+//vote maps
 map<json> registered_candidate_voters ={};
 map<json> register_vote ={};
 map<json> accepted_vote ={};
